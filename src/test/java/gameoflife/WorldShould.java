@@ -49,7 +49,7 @@ public class WorldShould {
         int neighbours = world.countNeighbours(new Coordinate(1,1));
 
 
-        assertThat(neighbours,is(6));
+        assertThat(neighbours,is(8));
     }
 
 }
