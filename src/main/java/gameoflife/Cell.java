@@ -8,7 +8,11 @@ public class Cell {
     }
 
     public void nextState(int neigbours) {
-        if(neigbours == 2){
+        if(neigbours > 3){
+            alive = false;
+            return;
+        }
+        if(neigbours >= 2){
             alive = true;
             return;
         }

@@ -22,12 +22,25 @@ public class CellShould {
     }
 
     @Test
-    public void keep_alive_if_has_normal_population(){
+    @Parameters({"2",
+                 "3"})
+    public void keep_alive_if_has_normal_population(int neighbours){
         Cell cell = new Cell();
 
-        cell.nextState(2);
+        cell.nextState(neighbours);
 
         assertThat(cell.isAlive(),is(true));
     }
 
+    @Test
+    @Parameters({"4",
+                 "5",
+                 "6"})
+    public void die_by_overpouplation(int neighbours){
+        Cell cell = new Cell();
+
+        cell.nextState(neighbours);
+
+        assertThat(cell.isAlive(),is(false));
+    }
 }
