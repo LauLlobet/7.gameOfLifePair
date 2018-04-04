@@ -11,36 +11,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(JUnitParamsRunner.class)
 public class CellShould {
     @Test
-    @Parameters({ "0",
-                    "1"})
-    public void die_of_underpopulation(int neighbours){
-        Cell cell = new Cell();
+    public void an_alive_cell_dies_of_underpopulation() {
+        Cell cell = new Cell(true);
 
-        cell.nextState(neighbours);
+        cell.nextState(1);
 
         assertThat(cell.isAlive(), is(false));
     }
-
     @Test
-    @Parameters({"2",
-                 "3"})
-    public void keep_alive_if_has_normal_population(int neighbours){
-        Cell cell = new Cell();
+    public void a_dead_cell_is_reborn_when_has_three_neigbours(){
+        Cell cell = new Cell(false);
 
-        cell.nextState(neighbours);
+        cell.nextState(3);
 
         assertThat(cell.isAlive(),is(true));
-    }
-
-    @Test
-    @Parameters({"4",
-                 "5",
-                 "6"})
-    public void die_by_overpouplation(int neighbours){
-        Cell cell = new Cell();
-
-        cell.nextState(neighbours);
-
-        assertThat(cell.isAlive(),is(false));
     }
 }

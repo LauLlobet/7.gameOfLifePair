@@ -1,22 +1,16 @@
 package gameoflife;
 
 public class Cell {
-    private boolean alive = true;
+    private boolean alive;
 
-    public void setAlive() {
+    public Cell(boolean alive) {
 
     }
 
-    public void nextState(int neigbours) {
-        if(neigbours > 3){
-            alive = false;
-            return;
-        }
-        if(neigbours >= 2){
+    public void nextState(int neighbours) {
+        if(neighbours == 3){
             alive = true;
-            return;
         }
-        alive = false;
     }
 
     public boolean isAlive() {
