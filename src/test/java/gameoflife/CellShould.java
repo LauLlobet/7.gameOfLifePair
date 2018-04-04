@@ -26,4 +26,13 @@ public class CellShould {
 
         assertThat(cell.isAlive(),is(true));
     }
+
+    @Test
+    public void an_alive_cell_is_keept_alive_if_has_normal_population(){
+        Cell cell = new Cell(true);
+
+        cell.nextState(2);
+
+        assertThat(cell.isAlive(),is(true));
+    }
 }
