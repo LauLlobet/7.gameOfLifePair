@@ -3,7 +3,7 @@ package gameoflife;
 public class Cell {
     private boolean alive;
 
-    public Cell(boolean alive) {
+    Cell(boolean alive) {
         this.alive = alive;
     }
 
@@ -12,6 +12,9 @@ public class Cell {
             alive = true;
         }
         if(neighbours < 2){
+            alive = false;
+        }
+        if(neighbours > 3){
             alive = false;
         }
     }

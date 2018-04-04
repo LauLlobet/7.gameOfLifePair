@@ -1,14 +1,10 @@
 package gameoflife;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@RunWith(JUnitParamsRunner.class)
 public class CellShould {
     @Test
     public void an_alive_cell_dies_of_underpopulation() {
@@ -34,5 +30,18 @@ public class CellShould {
         cell.nextState(2);
 
         assertThat(cell.isAlive(),is(true));
+
+       cell.nextState(3);
+
+       assertThat(cell.isAlive(),is(true));
+    }
+
+    @Test
+    public void a_alive_cell_should_die_for_overpopulation(){
+        Cell cell = new Cell(true);
+
+        cell.nextState(4);
+
+        assertThat(cell.isAlive(),is(false));
     }
 }
