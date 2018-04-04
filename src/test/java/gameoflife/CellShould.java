@@ -44,4 +44,15 @@ public class CellShould {
 
         assertThat(cell.isAlive(),is(false));
     }
+
+
+
+    @Test
+    public void a_dead_cell_should_remain_dead_if_has_not_three_neigbours(){
+        Cell cell = new Cell(false);
+
+        cell.nextState(2);
+
+        assertThat(cell.isAlive(),is(false));
+    }
 }

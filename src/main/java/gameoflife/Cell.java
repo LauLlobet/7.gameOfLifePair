@@ -11,10 +11,7 @@ public class Cell {
         if(neighbours == 3){
             alive = true;
         }
-        if(neighbours < 2){
-            alive = false;
-        }
-        if(neighbours > 3){
+        if(neighbours < 2 || neighbours > 3){
             alive = false;
         }
     }
