@@ -1,36 +1,50 @@
 package gameoflife;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class WorldShould {
-    @Test
-    public void start_with_all_cells_dead() {
-        World world = new World();
 
-        Cell cell = world.get(new Coordinate(1, 1));
+    private World world;
+    private int randomY;
+    private int randomX;
+
+    @Before
+    public void prepare() {
+        world =  new World();
+        randomX = getRandomInt();
+        randomY = getRandomInt();
+    }
+
+    private int getRandomInt() {
+        return ThreadLocalRandom.current().nextInt(-99999, 999999 + 1);
+    }
+
+    @Test
+    public void start_with_any_cell_dead() {
+        Cell cell = world.get(new Coordinate(randomX, randomY));
 
         assertThat(cell.isAlive(), is(false));
     }
 
     @Test
-    public void store_cells_at_postion() {
-        World world = new World();
-
+    public void store_cells_at_any_position() {
         Cell cell = new Cell(false);
-        world.put(new Coordinate(1, 1), cell);
-        Cell recoveredCell = world.get(new Coordinate(1, 1));
 
+        world.put(new Coordinate(randomX, randomY), cell);
+        Cell recoveredCell = world.get(new Coordinate(randomX, randomY));
 
         assertEquals(cell, recoveredCell);
     }
 
     @Test
-    public void count_neigbours_at_position_in_board(){
-        World world = new World();
+    public void count_neighbours_at_position_in_board(){
         Cell alive = new Cell(true);
 
 
@@ -45,7 +59,7 @@ public class WorldShould {
         world.put(new Coordinate(1,2), alive);
         world.put(new Coordinate(2,2), alive);
 
-        int neighbours = world.countNeighbours(new Coordinate(1,1));
+        int neighbours = world.countAliveNeighboursOfACell(new Coordinate(1,1));
 
 
         assertThat(neighbours,is(8));
