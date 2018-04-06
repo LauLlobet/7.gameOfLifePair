@@ -6,45 +6,57 @@ import org.junit.Test;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class WorldShould {
 
     private World world;
-    private int randomY;
-    private int randomX;
+    private int randomYinWorldRange;
+    private int randomXinWorldRange;
+    private int sideSize = 100;
+    private Coordinate inRangeCoordinate;
+    private Coordinate outOfRangeCoordinate;
 
     @Before
-    public void prepare() {
-        world =  new World();
-        randomX = getRandomInt();
-        randomY = getRandomInt();
+    public void before() {
+        world =  new World(new Coordinate(0,0),new Coordinate(sideSize,sideSize));
+        randomXinWorldRange = getRandomInt();
+        randomYinWorldRange = getRandomInt();
+        inRangeCoordinate = new Coordinate(randomXinWorldRange, randomYinWorldRange);
+        outOfRangeCoordinate = new Coordinate(-10,-10);
     }
 
     private int getRandomInt() {
-        return ThreadLocalRandom.current().nextInt(-99999, 999999 + 1);
+        return ThreadLocalRandom.current().nextInt(0, sideSize + 1);
     }
 
+
     @Test
-    public void start_with_any_cell_dead() {
-        Cell cell = world.get(new Coordinate(randomX, randomY));
+    public void start_with_all_cell_dead() {
+        Cell cell = world.get(new Coordinate(randomXinWorldRange, randomYinWorldRange));
 
         assertThat(cell.isAlive(), is(false));
     }
 
     @Test
-    public void store_cells_at_any_position() {
-        Cell cell = new Cell(false);
+    public void store_cells_in_world_range() {
+        Cell aliveCell = new Cell(true);
+        world.put(inRangeCoordinate, aliveCell);
 
-        world.put(new Coordinate(randomX, randomY), cell);
-        Cell recoveredCell = world.get(new Coordinate(randomX, randomY));
+        Cell recoveredCell = world.get(inRangeCoordinate);
 
-        assertEquals(cell, recoveredCell);
+        assertThat(recoveredCell.isAlive(),is(true));
     }
 
     @Test
-    public void count_neighbours_at_position_in_board(){
+    public void have_dead_cells_out_of_range() {
+        Cell recoveredCell = world.get(outOfRangeCoordinate);
+
+        assertThat(recoveredCell.isAlive(),is(false));
+    }
+
+    @Test
+    public void count_alive_neighbours_at_position_in_board(){
         Cell alive = new Cell(true);
 
 
@@ -59,10 +71,10 @@ public class WorldShould {
         world.put(new Coordinate(1,2), alive);
         world.put(new Coordinate(2,2), alive);
 
-        int neighbours = world.countAliveNeighboursOfACell(new Coordinate(1,1));
+        int aliveNeighbours = world.countAliveNeighboursAt(new Coordinate(1,1));
 
 
-        assertThat(neighbours,is(8));
+        assertThat(aliveNeighbours,is(8));
     }
 
 }

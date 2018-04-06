@@ -1,21 +1,20 @@
 package gameoflife;
 
-import java.util.Objects;
-
 public class Cell {
-    private boolean alive;
+    private final  boolean alive; // wrappable primitive
 
     Cell(boolean alive) {
         this.alive = alive;
     }
 
-    public void nextStep(int aliveNeighbours) {
+    public Cell nextStep(int aliveNeighbours) {
         if(aliveNeighbours == 3){
-            alive = true;
+            return new Cell(true);
         }
         if(aliveNeighbours < 2 || aliveNeighbours > 3){
-            alive = false;
+            return new Cell(false);
         }
+        return this;
     }
 
     public boolean isAlive() {
